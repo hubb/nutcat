@@ -1,9 +1,9 @@
-require 'net/http'
 require 'json'
+require 'nutcat/connection'
 
 module Nutcat
   class CatFact
-    attr_writer :http
+    include Connection
 
     def initialize(endpoint = 'http://catfacts-api.appspot.com/api/facts')
       @endpoint = URI.parse(endpoint)
@@ -17,10 +17,5 @@ module Nutcat
       ""
     end
     alias :to_s :fact
-
-    private
-    def http
-      @http ||= Net::HTTP.public_method(:get)
-    end
   end
 end

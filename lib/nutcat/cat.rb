@@ -3,6 +3,7 @@ require 'nutcat/cat_fact'
 module Nutcat
   class Cat
     def img
+      @img ||= CatImage.new.to_s
     end
 
     def fact

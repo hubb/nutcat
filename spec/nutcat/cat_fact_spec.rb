@@ -4,10 +4,8 @@ require 'nutcat/cat_fact'
 describe Nutcat::CatFact do
   subject(:fact) { described_class.new }
 
-  specify { is_expected.to respond_to(:http=) }
   specify { is_expected.to respond_to(:to_s) }
-  specify { is_expected.to respond_to(:fact) }
-  specify { is_expected.not_to respond_to(:http) }
+  specify { is_expected.to respond_to(:fact) }  
 
   describe 'fact' do
     let(:json) { "{\"facts\": [\"On September 6,1950, a four-month-old kitten belonging to Josephine Aufdenblatten of Geneva, Switzerland followed a group of climbers to the top of the 14,691 -ft. Matterhorn in the Alps.\"], \"success\": \"true\"}" }
