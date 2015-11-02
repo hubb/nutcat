@@ -4,4 +4,20 @@ $:.unshift(lib) unless $:.include?(lib)
 require 'nutcat/version'
 
 module Nutcat
+  class UnknownKindError < ArgumentError; end
+
+  def self.for(kind)
+    cat = Cat.new
+
+    case kind
+    when nil, 'browser'
+      system('open', cat.img)
+    when 'file'
+      cat.save(File.join(Dir.home, 'Desktop'))
+    when 'fact'
+      puts cat.fact
+    else
+      fail UnknownKindError.new("Sorry, don't know what to do with '#{kind}'.")
+    end
+  end
 end
