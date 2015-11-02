@@ -13,7 +13,8 @@ describe Nutcat::Cat do
   end
 
   describe 'fact' do
-    xspecify { expect(cat.fact).to be_a(String) }
+    # Calling the ineterwebs here
+    specify { expect(cat.fact).to be_a(String) }
   end
 
   describe 'save' do
