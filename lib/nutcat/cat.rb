@@ -1,3 +1,4 @@
+require 'nutcat/cat_image'
 require 'nutcat/cat_fact'
 
 module Nutcat

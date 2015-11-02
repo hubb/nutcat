@@ -9,7 +9,8 @@ describe Nutcat::Cat do
   specify { is_expected.to respond_to(:fact) }
 
   describe 'img' do
-    xspecify { expect(cat.img).to be_a(String) }
+    # Calling the ineterwebs here
+    specify { expect(cat.img).to be_a(String) }
   end
 
   describe 'fact' do
