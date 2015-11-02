@@ -19,6 +19,27 @@ describe Nutcat::Cat do
   end
 
   describe 'save' do
-    xspecify { expect(cat.fact).to be_a(String) }
+    context 'CatFetcher returns true' do
+      let(:fetcher) { double(fetch: true, path: '/tmp/bar.png') }
+
+      before do
+        allow(Nutcat::CatFetcher).to receive(:new).and_return(fetcher)
+      end
+
+      specify { expect(cat.save('/tmp')).to eq('File saved to /tmp/bar.png') }
+    end
+
+    context 'CatFetcher returns false' do
+      let(:fetcher) { double(fetch: false, path: '/tmp/bar.png') }
+
+      before do
+        allow(Nutcat::CatFetcher).to receive(:new).and_return(fetcher)
+      end
+
+      specify {
+        expect(cat.save('/tmp'))
+          .to eq('An error occurend, unable to write to /tmp/bar.png')
+      }
+    end
   end
 end
