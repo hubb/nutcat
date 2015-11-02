@@ -19,14 +19,14 @@ module Nutcat
 
     def image
       data = http.call(@endpoint)
-      doc  = REXML::Document.new(data)
-      parser.call(doc)
+      parser.call(data)
     end
 
     private
     def parser
-      @parser ||= ->(doc) {
-        el = doc.root.elements.to_a("data/images/image").first
+      @parser ||= ->(data) {
+        doc = REXML::Document.new(data)
+        el  = doc.root.elements.to_a("data/images/image").first
         Image.new(el.text('url'), el.text('source_url'))
       }
     end
