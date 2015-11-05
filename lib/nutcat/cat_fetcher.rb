@@ -9,18 +9,18 @@ module Nutcat
       new(*args).fetch
     end
 
-    attr_reader :path
-
-    def initialize(url, path)
-      @uri     = URI.parse(url)
-      filename = url.split('/')[-1]
-      @path    = File.join(path, filename)
+    def initialize(url, io)
+      @uri = URI.parse(url)
+      @io  = io
     end
 
     def fetch
-      File.open(@path, 'wb') do |f|
-        f.write http.call(@uri)
-      end
+      @io.reopen('wb') if @io.closed?
+      @io.rewind   unless @io.pos == 0
+
+      @io.write(http.call(@uri))
+      @io.close
+      
       true
     end
   end

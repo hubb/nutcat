@@ -6,28 +6,19 @@ describe Nutcat::CatFetcher do
     specify { expect(described_class).to respond_to(:fetch) }
   end
 
-  subject(:fetcher) { described_class.new('foo', '/tmp/foo') }
-
-  specify { expect(fetcher).to respond_to(:fetch) }
-  specify { expect(fetcher).to respond_to(:path) }
-
   describe 'fetch' do
-    let(:http) { ->(*) { 'foo' } }
+    let(:io) { StringIO.new('') }
     
-    it 'writes whatever the http call returns into a file' do
-      tmp     = Tempfile.new('cat.jpg')
-      path    = Pathname.new(tmp)
-      fetcher = described_class.new(
-        "http://foo.bar/#{path.basename.to_s}",
-        path.dirname.to_s
-      ).tap { |f| f.http = http }
+    subject(:fetcher) do
+      described_class.new("http://foo.bar/foo.bar", io).tap { |f|
+        f.http = ->(*) { 'foo' }
+      }
+    end
 
-      fetcher.fetch
-      tmp.rewind
+    specify { expect(fetcher.fetch).to be_truthy }
 
-      expect(tmp.read).to eq(http.call)
-
-      tmp.unlink
+    it 'writes whatever the http call returns into the given io' do
+      expect { fetcher.fetch }.to change { io.string }.to('foo')
     end
   end
 end

@@ -7,6 +7,7 @@ describe Nutcat::Cat do
   specify { is_expected.to respond_to(:img) }
   specify { is_expected.to respond_to(:save) }
   specify { is_expected.to respond_to(:fact) }
+  specify { is_expected.to respond_to(:filename) }
 
   describe 'img' do
     # Calling the ineterwebs here
@@ -19,27 +20,18 @@ describe Nutcat::Cat do
   end
 
   describe 'save' do
-    context 'CatFetcher returns true' do
+    before { cat.fetcher = ->(f) { f } }
+
+    context 'when the fetcher returns true' do
       let(:fetcher) { double(fetch: true, path: '/tmp/bar.png') }
 
-      before do
-        allow(Nutcat::CatFetcher).to receive(:new).and_return(fetcher)
-      end
-
-      specify { expect(cat.save('/tmp')).to eq('File saved to /tmp/bar.png') }
+      specify { expect(cat.save(fetcher)).to be_truthy }
     end
 
-    context 'CatFetcher returns false' do
+    context 'when the fetcher returns false' do
       let(:fetcher) { double(fetch: false, path: '/tmp/bar.png') }
 
-      before do
-        allow(Nutcat::CatFetcher).to receive(:new).and_return(fetcher)
-      end
-
-      specify {
-        expect(cat.save('/tmp'))
-          .to eq('An error occurend, unable to write to /tmp/bar.png')
-      }
+      specify { expect(cat.save(fetcher)).to be_falsey }
     end
   end
 end

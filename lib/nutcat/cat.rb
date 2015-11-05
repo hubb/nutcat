@@ -1,38 +1,37 @@
 require 'nutcat/cat_image'
 require 'nutcat/cat_fact'
 require 'nutcat/cat_fetcher'
-require 'pathname'
+require 'tempfile'
 
 module Nutcat
   class Cat
-    class InvalidPathError < ArgumentError; end
+    attr_writer :fetcher
 
     def img
-      @img ||= cat_image.to_s
+      @img ||= image.to_s
     end
 
     def fact
       @fact ||= CatFact.new.to_s
     end
 
-    def save(p)
-      path = Pathname.new(p)
-      unless path.exist?
-        fail InvalidPathError.new('The path you provided does not exist!')
-      end
-      
-      fetcher = CatFetcher.new(cat_image.url, path.to_s)
+    def filename
+      @filename ||= image.url.split('/')[-1]
+    end
 
-      if fetcher.fetch
-        "File saved to #{fetcher.path}"
-      else
-        "An error occurend, unable to write to #{fetcher.path}"
-      end
+    def save(file)
+      cat = fetcher.call(file)
+
+      cat.fetch
     end
 
     private
-    def cat_image
-      @cat_image ||= CatImage.new
+    def image
+      @image ||= CatImage.new
+    end
+
+    def fetcher
+      @fetcher ||= ->(file) { CatFetcher.new(image.url, file) }
     end
   end
 end
