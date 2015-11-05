@@ -1,4 +1,4 @@
-## Nutcat
+## Nutcat [![Build Status](https://travis-ci.org/hubb/nutcat.svg?branch=master)](https://travis-ci.org/hubb/nutcat)
 
 ### Usage
 
