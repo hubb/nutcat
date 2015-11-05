@@ -1,33 +1,29 @@
-# Nutmeg Technical Test
+## Nutcat
 
-Please write a Ruby command line utility as a Ruby gem.  
-The gem should be installable, but does not need to be published on rubygems.org.  
+### Usage
 
-The command should have the following interface:  
+`nutcat [browser|file|fact]`
 
-    $ my_command [browser|file|fact]
+* with `browser`, open a new browser window displaying an image of a cat (default);
+* with `file`, it saves on the desktop an image of a cat, as an image file;
+* with `fact`, it prints to stdout a cat fact;
+* with `catpix`, it renders the image of the cat in the terminal;
 
 
-with `browser` being the default if no arguments are passed.  
-
-The program should interact with the following public APIs:  
+Cat informations are fetched from the following APIs:
 
 * http://thecatapi.com/
 * http://catfacts-api.appspot.com/doc.html
 
+### Development
 
-The command should:  
+```
+$ git clone git@github.com:hubb/nutcat.git
+$ cd nutcat
+$ bundle install
+$ bundle exec rspec
+```
 
-* with `browser`, open a new browser window displaying an image of a cat;
-* with `file`, it should save on the desktop an image of a cat, as an image file;
-* with `fact`, it should print to stdout a cat fact;
-* also, implement a new argument of your choice to expand the program.
+### License
 
-There is __no__ need to support multiple operating systems.
-
-### Important:
-
-* Write tests.
-* Use git, and write clear commit messages. The exercise must be submitted as a git repository (either as an archive or as a public repo on GitHub).
-* Think about code structure, quality and readability.
-* Write a readme.
+MIT, see [LICENSE](https://github.com/hubb/nutcat/blob/master/LICENSE)
