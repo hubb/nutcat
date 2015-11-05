@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.description = "A Cat Line Interface for Nutmeg"
   s.homepage    = "http://nutmeg.com"
 
+  s.add_runtime_dependency "catpix"
   s.add_development_dependency "bundler", "~> 1.10"
   s.add_development_dependency "pry", "~> 0.10"
   s.add_development_dependency "pry-nav", "~> 0.2.4"

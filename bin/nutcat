@@ -2,5 +2,5 @@
 
 require_relative '../lib/nutcat'
 
-input  = ARGV[0]
-Nutcat.for(input)
+input = ARGV[0]
+Nutcat.render(input)
