@@ -40,7 +40,22 @@ describe Nutcat do
       end
     end
     
-    context 'when file is given', :stdout do
+    context 'when catpix is given' do
+      let(:cat) { double(save: true, file: Tempfile.open('foo.jpg') { |w| w << "foo" }) }
+
+      it 'prints a cat in the terminal' do
+        io = StringIO.new("")
+        $stdout = io
+        expect(Nutcat::Cat).to receive(:new).and_return(cat)
+        expect(Catpix).to receive(:print_image).and_return(true)
+
+        expect(described_class.render('catpix')).to eq(true)
+
+        $stdout = STDOUT
+      end
+    end
+    
+    context 'when file is given' do
       it 'writes the cat to a file on the desktop' do
         io = Tempfile.new('foo.bar')
         expect(File).to receive(:open).and_return(io)

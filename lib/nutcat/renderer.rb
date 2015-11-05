@@ -1,6 +1,6 @@
 module Nutcat
   module Renderer
-    RENDERERS = %w( browser file fact )
+    RENDERERS = %w( browser file fact catpix )
     class RendererKindError < ArgumentError; end
 
     def self.for(kind)

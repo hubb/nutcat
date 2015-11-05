@@ -6,7 +6,8 @@ module Renderer
   module CatpixRenderer
     def render
       begin
-        file = Tempfile.new('cat.jpg')
+        file = Tempfile.new(%w(cat .jpg))
+        save(file)
         Catpix::print_image(file.path,
           limit_x:    1.0,
           limit_y:    1.0,
